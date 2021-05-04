@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BeneFIT</string>
+    <string name="action_sign_in">Iniziamo!</string>
+    <string name="action_register">Andiamo!</string>
+    <string name="welcome">Benvenuto!</string>
+    <string name="Welcome_back">Bentornato!</string>
+    <string name="new_user">Non sei ancora registrato? Registrati</string>
+    <string name="register">Registrati</string>
+</resources>
