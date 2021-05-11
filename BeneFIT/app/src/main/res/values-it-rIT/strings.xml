@@ -7,4 +7,7 @@
     <string name="Welcome_back">Bentornato!</string>
     <string name="new_user">Non sei ancora registrato? Registrati</string>
     <string name="register">Registrati</string>
+    <string name="invalid_email">Email non valida</string>
+    <string name="invalid_password">Minimo 8 caratteri</string>
+    <string name="login_failed">Login fallito</string>
 </resources>

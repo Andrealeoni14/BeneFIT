@@ -8,4 +8,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="green">#4FC742</color>
+    <color name="viola">#6671E4</color>
+    <color name="azzurro">#B3E5FE</color>
 </resources>
