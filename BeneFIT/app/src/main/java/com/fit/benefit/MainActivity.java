@@ -12,7 +12,7 @@ import com.fit.benefit.ui.login.LoginActivity;
 public class MainActivity extends AppCompatActivity {
 
     private Button login;
-
+    private Button register;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,10 +26,22 @@ public class MainActivity extends AppCompatActivity {
                 login();
             }
         });
+
+        register = (Button) findViewById(R.id.register);
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                register();
+            }
+        });
     }
 
     public void login() {
         Intent intent = new Intent (this, LoginActivity.class);
+        startActivity(intent);
+    }
+    public void register() {
+        Intent intent = new Intent (this, RegisterActivity.class);
         startActivity(intent);
     }
 }
