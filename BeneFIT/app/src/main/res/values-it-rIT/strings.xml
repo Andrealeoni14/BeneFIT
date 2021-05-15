@@ -10,4 +10,7 @@
     <string name="invalid_email">Email non valida</string>
     <string name="invalid_password">Minimo 8 caratteri</string>
     <string name="login_failed">Login fallito</string>
+    <string name="conferma_password">Conferma Password</string>
+    <string name="enterAnyway">Entra come ospite</string>
+    <string name="title_activity_home">Lista Esericizi</string>
 </resources>

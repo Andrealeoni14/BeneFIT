@@ -7,38 +7,63 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     tools:context=".RegisterActivity">
-    
+
 
     <TextView
         android:id="@+id/bentornato"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="108dp"
         android:text="@string/welcome"
         android:textColor="@color/black"
         android:textSize="45sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/shapeableImageView" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/username"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="24dp"
+        android:hint="@string/username"
+        android:backgroundTint="@color/black"
+        android:textColor="@color/black"
+        android:textColorHighlight="@color/light_orange"
+        android:textColorHint="@color/dark_orange"
+        android:textCursorDrawable="?android:attr/textCursorDrawable"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bentornato"
+        tools:ignore="LabelFor" />
 
     <EditText
         android:id="@+id/email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="24dp"
-        android:hint="@string/prompt_email"
+        android:autofillHints=""
+        android:backgroundTint="@color/black"
+        android:textColor="@color/black"
+        android:textColorHighlight="@color/light_orange"
+        android:textColorHint="@color/dark_orange"
+        android:textColorLink="@color/black"
+        android:cursorVisible="true"
+        android:hint="@string/e_mail"
         android:inputType="textEmailAddress"
         android:selectAllOnFocus="true"
-        android:backgroundTint="@color/black"
-        android:textColorHint="@color/black"
+        android:textCursorDrawable="?android:attr/textCursorDrawable"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bentornato"
-        android:autofillHints="" />
+        app:layout_constraintTop_toBottomOf="@+id/username" />
 
     <EditText
         android:id="@+id/password"
@@ -47,56 +72,47 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="24dp"
+        android:autofillHints=""
+        android:backgroundTint="@color/black"
+        android:textColor="@color/black"
+        android:textColorHighlight="@color/light_orange"
+        android:textColorHint="@color/dark_orange"
+        android:textColorLink="@color/black"
+        android:cursorVisible="true"
         android:hint="@string/prompt_password"
         android:imeActionLabel="@string/action_register"
         android:imeOptions="actionDone"
         android:inputType="textPassword"
         android:selectAllOnFocus="true"
-        android:backgroundTint="@color/black"
-        android:textColorHint="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email"
-        android:autofillHints="" />
+        app:layout_constraintTop_toBottomOf="@+id/email" />
+
 
     <EditText
-        android:id="@+id/email2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="24dp"
-        android:hint="@string/prompt_email"
-        android:inputType="textEmailAddress"
-        android:selectAllOnFocus="true"
-        android:backgroundTint="@color/black"
-        android:textColorHint="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password"
-        android:autofillHints="" />
-
-    <EditText
-        android:id="@+id/password2"
+        android:id="@+id/confermaPassword"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="24dp"
-        android:hint="@string/prompt_password"
+        android:autofillHints=""
+        android:backgroundTint="@color/black"
+        android:textColor="@color/black"
+        android:textColorHighlight="@color/light_orange"
+        android:textColorHint="@color/dark_orange"
+        android:textColorLink="@color/black"
+        android:cursorVisible="true"
+        android:hint="@string/conferma_password"
         android:imeActionLabel="@string/action_register"
         android:imeOptions="actionDone"
         android:inputType="textPassword"
         android:selectAllOnFocus="true"
-        android:backgroundTint="@color/black"
-        android:textColorHint="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email2"
-        android:autofillHints="" />
+        app:layout_constraintTop_toBottomOf="@+id/password" />
 
     <Button
         android:id="@+id/register"
@@ -115,7 +131,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password2"
+        app:layout_constraintTop_toBottomOf="@+id/confermaPassword"
         app:layout_constraintVertical_bias="0.067" />
 
 

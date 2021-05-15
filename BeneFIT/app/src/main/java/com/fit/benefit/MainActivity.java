@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button login;
     private Button register;
+    private Button home;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,14 @@ public class MainActivity extends AppCompatActivity {
                 register();
             }
         });
+
+        home = (Button) findViewById(R.id.home);
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                home();
+            }
+        });
     }
 
     public void login() {
@@ -42,6 +51,10 @@ public class MainActivity extends AppCompatActivity {
     }
     public void register() {
         Intent intent = new Intent (this, RegisterActivity.class);
+        startActivity(intent);
+    }
+    public void home() {
+        Intent intent = new Intent (this, HomeActivity.class);
         startActivity(intent);
     }
 }
