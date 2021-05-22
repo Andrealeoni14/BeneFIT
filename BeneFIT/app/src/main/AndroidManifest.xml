@@ -12,9 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BeneFIT">
         <activity
+            android:name=".CategoryActivity"
+            android:label="@string/title_activity_category"
+            android:theme="@style/Theme.BeneFIT.NoActionBar"></activity>
+        <activity
             android:name=".HomeActivity"
             android:label="@string/title_activity_home"
-            android:theme="@style/Theme.BeneFIT.NoActionBar"></activity>
+            android:theme="@style/Theme.BeneFIT.NoActionBar" />
         <activity android:name=".IntroductoryActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

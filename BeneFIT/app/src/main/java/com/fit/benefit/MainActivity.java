@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
     public void home() {
-        Intent intent = new Intent (this, HomeActivity.class);
+        Intent intent = new Intent (this, CategoryActivity.class);
         startActivity(intent);
     }
 }

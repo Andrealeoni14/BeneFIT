@@ -12,5 +12,5 @@
     <string name="login_failed">Login fallito</string>
     <string name="conferma_password">Conferma Password</string>
     <string name="enterAnyway">Entra come ospite</string>
-    <string name="title_activity_home">Lista Esericizi</string>
+    <string name="title_activity_home">Lista Esercizi</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.fit.benefit;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.android.volley.Request;
@@ -38,11 +39,20 @@ public class HomeActivity extends AppCompatActivity {
 
         mTextViewResult = findViewById(R.id.text_view_result);
         mQueue = Volley.newRequestQueue(this);
+        Intent intent = getIntent();
+        int category = intent.getIntExtra("category", 0);
+
+        jsonParse(category);
     }
 
-    private void jsonParse() {
-
-        String url = "https://wger.de/api/v2/exerciseinfo/";
+    private void jsonParse(int category) {
+        String url;
+        if (category == 0) { // if no category is passed
+            url = "https://wger.de/api/v2/exercise/?language=2&limit=300&offset=0";
+        }
+        else { // request url with language set to English (there's German too with id = 1)
+            url = "https://wger.de/api/v2/exercise/?language=2&limit=300&offset=0&category=" + category;
+        }
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
@@ -54,10 +64,13 @@ public class HomeActivity extends AppCompatActivity {
                             for (int i = 0; i < jsonArray.length(); i++){
                                 JSONObject exercise = jsonArray.getJSONObject(i);
 
+                                //JSONObject lang = exercise.getJSONObject("language");
+
                                 int id = exercise.getInt("id");
                                 String name = exercise.getString("name");
+                                //String language = lang.getString("short_name");
 
-                                mTextViewResult.append(String.valueOf(id) + "," + name + "\n\n");
+                                mTextViewResult.append(name + "\n\n");
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

@@ -12,7 +12,6 @@
     <string name="new_user">Don\'t have an account? Sign Up</string>
     <string name="register">Register</string>
     <string name="login" translatable="false">Login</string>
-    <string name="Username" translatable="false">Username</string>
     <string name="e_mail" translatable="false">e-mail</string>
     <string name="prompt_email" translatable="false">prompt_email</string>
     <string name="conferma_password">Confirm Password</string>
@@ -20,9 +19,21 @@
     <string name="title_activity_home">
         Exercises list
     </string>
-    <string name="large_text" translatable="false">
-
-    </string>
-    <string name="action_settings" translatable="false">Settings</string>
     <string name="enterAnyway">Guest access</string>
+    <string name="title_activity_category">CategoryActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="category8">Arms</string>
+    <string name="category9">Legs</string>
+    <string name="category10">Abs</string>
+    <string name="category11">Chest</string>
+    <string name="category12">Back</string>
+    <string name="category13">Shoulders</string>
+    <string name="category14">Calves</string>
 </resources>
