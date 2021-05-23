@@ -47,7 +47,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private void jsonParse(int category) {
         String url;
-        if (category == 0) { // if no category is passed
+        if (category == 0) { // means the user wants to see the saved workouts
             url = "https://wger.de/api/v2/exercise/?language=2&limit=300&offset=0";
         }
         else { // request url with language set to English (there's German too with id = 1)

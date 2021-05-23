@@ -12,18 +12,19 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.view.View;
 import android.widget.Button;
+import android.widget.TableRow;
 
 public class CategoryActivity extends AppCompatActivity {
 
     // buttons for the categories
-    private Button category8;
-    private Button category9;
-    private Button category10;
-    private Button category11;
-    private Button category12;
-    private Button category13;
-    private Button category14;
-    private Button categorySaved; // user saved exercises
+    private TableRow category8;
+    private TableRow category9;
+    private TableRow category10;
+    private TableRow category11;
+    private TableRow category12;
+    private TableRow category13;
+    private TableRow category14;
+    private TableRow categorySaved; // user saved exercises
 
 
     @Override
@@ -31,22 +32,69 @@ public class CategoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
 
-        category8 = (Button) findViewById(R.id.bCaategory8);
+        categorySaved = (TableRow) findViewById(R.id.bCaategorySaved);
+        categorySaved.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                categorySaved();
+            }
+        });
+        category8 = (TableRow) findViewById(R.id.bCaategory8);
         category8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 category8();
             }
         });
-        category9 = (Button) findViewById(R.id.bCaategory9);
+        category9 = (TableRow) findViewById(R.id.bCaategory9);
         category9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 category9();
             }
         });
+        category10 = (TableRow) findViewById(R.id.bCaategory10);
+        category10.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                category10();
+            }
+        });
+        category11 = (TableRow) findViewById(R.id.bCaategory11);
+        category11.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                category11();
+            }
+        });
+        category12 = (TableRow) findViewById(R.id.bCaategory12);
+        category12.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                category12();
+            }
+        });
+        category13 = (TableRow) findViewById(R.id.bCaategory13);
+        category13.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                category13();
+            }
+        });
+        category14 = (TableRow) findViewById(R.id.bCaategory14);
+        category14.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                category14();
+            }
+        });
     }
 
+    public void categorySaved() {
+        Intent intent = new Intent (this, HomeActivity.class);
+        intent.putExtra("category", 0);
+        startActivity(intent);
+    }
     public void category8() {
         Intent intent = new Intent (this, HomeActivity.class);
         intent.putExtra("category", 8);
@@ -55,6 +103,31 @@ public class CategoryActivity extends AppCompatActivity {
     public void category9() {
         Intent intent = new Intent (this, HomeActivity.class);
         intent.putExtra("category", 9);
+        startActivity(intent);
+    }
+    public void category10() {
+        Intent intent = new Intent (this, HomeActivity.class);
+        intent.putExtra("category", 10);
+        startActivity(intent);
+    }
+    public void category11() {
+        Intent intent = new Intent (this, HomeActivity.class);
+        intent.putExtra("category", 11);
+        startActivity(intent);
+    }
+    public void category12() {
+        Intent intent = new Intent (this, HomeActivity.class);
+        intent.putExtra("category", 12);
+        startActivity(intent);
+    }
+    public void category13() {
+        Intent intent = new Intent (this, HomeActivity.class);
+        intent.putExtra("category", 13);
+        startActivity(intent);
+    }
+    public void category14() {
+        Intent intent = new Intent (this, HomeActivity.class);
+        intent.putExtra("category", 14);
         startActivity(intent);
     }
 }

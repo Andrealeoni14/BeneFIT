@@ -23,47 +23,25 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/username"
+        android:id="@+id/email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="25dp"
         android:layout_marginEnd="24dp"
-        android:hint="@string/username"
+        android:hint="@string/e_mail"
         android:backgroundTint="@color/black"
         android:textColor="@color/black"
         android:textColorHighlight="@color/light_orange"
         android:textColorHint="@color/dark_orange"
         android:textCursorDrawable="?android:attr/textCursorDrawable"
         android:textSize="18sp"
+        android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bentornato"
         tools:ignore="LabelFor" />
-
-    <EditText
-        android:id="@+id/email"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="24dp"
-        android:autofillHints=""
-        android:backgroundTint="@color/black"
-        android:textColor="@color/black"
-        android:textColorHighlight="@color/light_orange"
-        android:textColorHint="@color/dark_orange"
-        android:textColorLink="@color/black"
-        android:cursorVisible="true"
-        android:hint="@string/e_mail"
-        android:inputType="textEmailAddress"
-        android:selectAllOnFocus="true"
-        android:textCursorDrawable="?android:attr/textCursorDrawable"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/username" />
 
     <EditText
         android:id="@+id/password"
@@ -91,7 +69,7 @@
 
 
     <EditText
-        android:id="@+id/confermaPassword"
+        android:id="@+id/confermPassword"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -131,7 +109,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/confermaPassword"
+        app:layout_constraintTop_toBottomOf="@+id/confermPassword"
         app:layout_constraintVertical_bias="0.067" />
 
 

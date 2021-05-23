@@ -20,7 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    EditText mUsername, mEmail, mPassword;
+    EditText mEmail, mPassword, mPassword2;
     Button mRegisterBtn;
     FirebaseAuth fAuth;
     ProgressBar mProgress;
@@ -31,9 +31,9 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        mUsername = findViewById(R.id.username);
         mEmail = findViewById(R.id.email);
         mPassword = findViewById(R.id.password);
+        mPassword2 = findViewById(R.id.confermPassword);
         mRegisterBtn = findViewById(R.id.register);
         mProgress = findViewById(R.id.loading);
         fAuth = FirebaseAuth.getInstance();
@@ -43,6 +43,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String email = mEmail.getText().toString().trim();
                 String password = mPassword.getText().toString().trim();
+                String password2 = mPassword2.getText().toString().trim();
 
                 if (TextUtils.isEmpty(email)) {
                     mEmail.setError("Email is required");
@@ -53,7 +54,11 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
                 if (password.length() < 8) {
-                    mPassword.setError("Password is too short");
+                    mPassword.setError("Password is too short! Must be at least 8 characters");
+                    return;
+                }
+                if (!password.equals(password2)){
+                    mPassword.setError("Password does not match!");
                     return;
                 }
 
@@ -62,19 +67,19 @@ public class RegisterActivity extends AppCompatActivity {
 
                 fAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(
                         new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        mProgress.setVisibility(View.GONE);
-                        if (task.isSuccessful()) {
-                            FirebaseUser user = fAuth.getCurrentUser();
-                            updateUI(user);
-                        } else {
-                            Toast.makeText(RegisterActivity.this, "Error ! " +
-                                    task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                        }
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                mProgress.setVisibility(View.GONE);
+                                if (task.isSuccessful()) {
+                                    FirebaseUser user = fAuth.getCurrentUser();
+                                    updateUI(user);
+                                } else {
+                                    Toast.makeText(RegisterActivity.this, "Error ! " +
+                                            task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                }
 
-                    }
-                });
+                            }
+                        });
             }
         });
     }
@@ -94,7 +99,7 @@ public class RegisterActivity extends AppCompatActivity {
                                         getException().getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         }
-            });
+                    });
             Intent intent = new Intent (this, CategoryActivity.class);
             startActivity(intent);
         } else {

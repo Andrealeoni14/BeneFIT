@@ -36,4 +36,5 @@
     <string name="category12">Back</string>
     <string name="category13">Shoulders</string>
     <string name="category14">Calves</string>
+    <string name="categorySaved">Saved workouts</string>
 </resources>
