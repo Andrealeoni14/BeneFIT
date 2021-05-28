@@ -13,4 +13,15 @@
     <string name="conferma_password">Conferma Password</string>
     <string name="enterAnyway">Entra come ospite</string>
     <string name="title_activity_home">Lista Esercizi</string>
+    <string name="category8">Braccia</string>
+    <string name="category9">Gambe</string>
+    <string name="category10">Addominali</string>
+    <string name="category11">Petto</string>
+    <string name="category12">Schiena</string>
+    <string name="category13">Spalle</string>
+    <string name="category14">Polpacci</string>
+    <string name="categorySaved">Esercizi salvati</string>
+    <string name="next">Successivo</string>
+    <string name="previous">Precedente</string>
+    <string name="title_activity_category">Categorie esercizi</string>
 </resources>

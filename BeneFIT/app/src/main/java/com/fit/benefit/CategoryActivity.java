@@ -32,56 +32,56 @@ public class CategoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
 
-        categorySaved = (TableRow) findViewById(R.id.bCaategorySaved);
+        categorySaved = (TableRow) findViewById(R.id.CategorySaved);
         categorySaved.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 categorySaved();
             }
         });
-        category8 = (TableRow) findViewById(R.id.bCaategory8);
+        category8 = (TableRow) findViewById(R.id.Category8);
         category8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 category8();
             }
         });
-        category9 = (TableRow) findViewById(R.id.bCaategory9);
+        category9 = (TableRow) findViewById(R.id.Category9);
         category9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 category9();
             }
         });
-        category10 = (TableRow) findViewById(R.id.bCaategory10);
+        category10 = (TableRow) findViewById(R.id.Category10);
         category10.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 category10();
             }
         });
-        category11 = (TableRow) findViewById(R.id.bCaategory11);
+        category11 = (TableRow) findViewById(R.id.Category11);
         category11.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 category11();
             }
         });
-        category12 = (TableRow) findViewById(R.id.bCaategory12);
+        category12 = (TableRow) findViewById(R.id.Category12);
         category12.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 category12();
             }
         });
-        category13 = (TableRow) findViewById(R.id.bCaategory13);
+        category13 = (TableRow) findViewById(R.id.Category13);
         category13.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 category13();
             }
         });
-        category14 = (TableRow) findViewById(R.id.bCaategory14);
+        category14 = (TableRow) findViewById(R.id.Category14);
         category14.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
