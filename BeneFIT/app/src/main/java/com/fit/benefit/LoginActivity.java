@@ -17,6 +17,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import android.util.Log;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -39,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.i("test", "onClick");
                 String strEmail = email.getText().toString().trim();
                 String strPassword = password.getText().toString().trim();
 
@@ -50,18 +52,22 @@ public class LoginActivity extends AppCompatActivity {
                 }
 
                 progress.setVisibility(View.VISIBLE);
+                Log.i("test",  "Finished pre-login activities");
                 auth.signInWithEmailAndPassword(strEmail, strPassword).addOnCompleteListener(
                         new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 progress.setVisibility(View.GONE);
+                                Log.i("test", "Finished pre-check activities");
                                 if(task.isSuccessful()) {
                                     FirebaseUser user = auth.getCurrentUser();
+                                    Log.i("test", "Logged in");
                                     updateUI(user);
                                 }
                                 else {
+                                    Log.i("test", "Failed login");
                                     Toast.makeText(LoginActivity.this, "Error ! " +
-                                            task.getException().getMessage(),
+                                                    task.getException().getMessage(),
                                             Toast.LENGTH_SHORT).show();
                                 }
                             }
@@ -70,7 +76,9 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+
     private void updateUI(FirebaseUser user) {
+        Log.i("test", "UpdateUI");
         if(user != null) {
             Intent intent = new Intent (this, CategoryActivity.class);
             startActivity(intent);
