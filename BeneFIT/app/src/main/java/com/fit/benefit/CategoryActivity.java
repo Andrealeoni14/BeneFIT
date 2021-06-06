@@ -3,7 +3,6 @@ package com.fit.benefit;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.fit.benefit.ui.login.LoginActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 

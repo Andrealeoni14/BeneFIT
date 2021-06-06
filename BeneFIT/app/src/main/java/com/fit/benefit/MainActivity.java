@@ -7,8 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.fit.benefit.ui.login.LoginActivity;
-
 public class MainActivity extends AppCompatActivity {
 
     private Button login;
