@@ -48,7 +48,6 @@ public class HomeActivity extends AppCompatActivity {
         jsonParse(category);
     }
 
-
     private void jsonParse(int category) {
         String url;
         mProgress.setVisibility(View.VISIBLE);
