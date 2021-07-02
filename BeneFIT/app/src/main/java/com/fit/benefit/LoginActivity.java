@@ -19,6 +19,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import android.util.Log;
 
+import org.jetbrains.annotations.NotNull;
+
 public class LoginActivity extends AppCompatActivity {
 
     FirebaseAuth auth;
@@ -36,51 +38,52 @@ public class LoginActivity extends AppCompatActivity {
         password = findViewById(R.id.password);
         loginButton = findViewById(R.id.login);
         progress = findViewById(R.id.loading);
-
-        loginButton.setOnClickListener(new View.OnClickListener() {
+        auth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
             @Override
-            public void onClick(View v) {
-                Log.i("test", "onClick");
-                String strEmail = email.getText().toString().trim();
-                String strPassword = password.getText().toString().trim();
-
-                if (TextUtils.isEmpty(strEmail)) {
-                    email.setError("Email is required");
-                }
-                if(TextUtils.isEmpty(strPassword)) {
-                    password.setError("Password is required");
+            public void onAuthStateChanged(@NonNull @NotNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    updateUI(user);
                 }
 
-                progress.setVisibility(View.VISIBLE);
-                Log.i("test",  "Finished pre-login activities");
-                auth.signInWithEmailAndPassword(strEmail, strPassword).addOnCompleteListener(
-                        new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                progress.setVisibility(View.GONE);
-                                Log.i("test", "Finished pre-check activities");
-                                if(task.isSuccessful()) {
-                                    FirebaseUser user = auth.getCurrentUser();
-                                    Log.i("test", "Logged in");
-                                    updateUI(user);
-                                }
-                                else {
-                                    Log.i("test", "Failed login");
-                                    Toast.makeText(LoginActivity.this, "Error ! " +
-                                                    task.getException().getMessage(),
-                                            Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
+                loginButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String strEmail = email.getText().toString().trim();
+                        String strPassword = password.getText().toString().trim();
+
+                        if (TextUtils.isEmpty(strEmail)) {
+                            email.setError("Email is required");
+                        }
+                        if (TextUtils.isEmpty(strPassword)) {
+                            password.setError("Password is required");
+                        }
+
+                        progress.setVisibility(View.VISIBLE);
+                        auth.signInWithEmailAndPassword(strEmail, strPassword).addOnCompleteListener(
+                                new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        progress.setVisibility(View.GONE);
+                                        if (task.isSuccessful()) {
+                                            FirebaseUser user = auth.getCurrentUser();
+                                            updateUI(user);
+                                        } else {
+                                            Toast.makeText(LoginActivity.this, "Error ! " +
+                                                            task.getException().getMessage(),
+                                                    Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+                    }
+                });
             }
         });
     }
 
-
     private void updateUI(FirebaseUser user) {
-        Log.i("test", "UpdateUI");
-        if(user != null) {
-            Intent intent = new Intent (this, CategoryActivity.class);
+        if (user != null) {
+            Intent intent = new Intent(LoginActivity.this, CategoryActivity.class);
             startActivity(intent);
         } else {
             Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_SHORT).show();
