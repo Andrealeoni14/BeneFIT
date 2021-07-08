@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "431222876405",
+    "project_id": "benefit-a509a",
+    "storage_bucket": "benefit-a509a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:431222876405:android:387e383f83e02bc415bdbc",
+        "android_client_info": {
+          "package_name": "com.fit.benefit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "431222876405-khbmk5simfvngqhjahuolvprrvt4l0o2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXhEsEkCXOEgxwSL-ZpajbWLA_PGEAeMo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "431222876405-khbmk5simfvngqhjahuolvprrvt4l0o2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
