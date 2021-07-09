@@ -15,7 +15,7 @@ import java.util.List;
 
 public class ExerciseRecyclerViewAdapter extends RecyclerView.Adapter<ExerciseRecyclerViewAdapter.ExercisesViewHolder> {
 
-    private List<Exercise> listOfExercises;
+    private List<Exercise> exerciseList;
     private OnExerciseClickListener listener;
 
     public interface OnExerciseClickListener {
@@ -23,15 +23,13 @@ public class ExerciseRecyclerViewAdapter extends RecyclerView.Adapter<ExerciseRe
     }
 
     public ExerciseRecyclerViewAdapter(List<Exercise> exerciseList, OnExerciseClickListener onExerciseClickListener) {
-        listOfExercises = exerciseList;
+        this.exerciseList = exerciseList;
         listener = onExerciseClickListener;
     }
 
     @NonNull
     @Override
     public ExercisesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        /*View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.content_scrolling, parent, false); */
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.exercise_cardview, parent, false);
         return new ExercisesViewHolder(view);
@@ -39,19 +37,19 @@ public class ExerciseRecyclerViewAdapter extends RecyclerView.Adapter<ExerciseRe
 
     @Override
     public void onBindViewHolder(@NonNull ExercisesViewHolder holder, int position) {
-        holder.bind(listOfExercises.get(position));
+        holder.bind(exerciseList.get(position));
     }
 
     @Override
     public int getItemCount() {
-        if (listOfExercises != null) {
-            return listOfExercises.size();
+        if (exerciseList != null) {
+            return exerciseList.size();
         }
         return 0;
     }
 
     public void addData(List<Exercise> exerciseList) {
-        listOfExercises = exerciseList;
+        this.exerciseList = exerciseList;
     }
 
     public class ExercisesViewHolder extends RecyclerView.ViewHolder{

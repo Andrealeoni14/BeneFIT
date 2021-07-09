@@ -1,6 +1,7 @@
 package com.fit.benefit.repositories;
 
 import android.app.Application;
+import android.util.Log;
 
 import com.fit.benefit.database.ExerciseDao;
 import com.fit.benefit.database.ExerciseRoomDatabase;
@@ -8,18 +9,23 @@ import com.fit.benefit.models.Exercise;
 import com.fit.benefit.models.Response;
 import com.fit.benefit.services.ExercisesService;
 import com.fit.benefit.utils.Constants;
+import com.fit.benefit.utils.ResponseCallback;
+import com.fit.benefit.utils.ServiceLocator;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 
+import static android.content.ContentValues.TAG;
+
 public class ExerciseRepository implements IExerciseRepository {
 
     private final ExercisesService exercisesService;
     private final ResponseCallback responseCallback;
     private final ExerciseDao exerciseDao;
-    private long lastUpdate = 0;
 
     public ExerciseRepository(ResponseCallback responseCallback, Application application) {
         this.exercisesService = ServiceLocator.getInstance().getExercisesServiceWithRetrofit();
@@ -29,34 +35,38 @@ public class ExerciseRepository implements IExerciseRepository {
     }
 
     @Override
-    public void fetchExercises() {
+    public void fetchExercises(long lastUpdate) {
 
         long currentTime = System.currentTimeMillis();
 
         if (currentTime - lastUpdate > Constants.FRESH_TIMEOUT) {
 
-            Call<Response> call = exercisesService.getExercise("en", Constants.EXERCISES_API_KEY);
+            Call<Response> call = exercisesService.getExercise(2, 300, 0, Constants.EXERCISES_API_KEY);
 
             call.enqueue(new Callback<Response>() {
                 @Override
-                public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
+                public void onResponse(@NotNull Call<Response> call, @NotNull retrofit2.Response<Response> response) {
                     if (response.body() != null && response.isSuccessful()) {
-                        lastUpdate = System.currentTimeMillis();
+                        long lastUpdate = System.currentTimeMillis();
                         List<Exercise> exerciseList = response.body().getExerciseList();
                         saveDataInDatabase(exerciseList);
-                        responseCallback.onResponse(response.body().getExerciseList(), lastUpdate);
+                        responseCallback.onResponse(exerciseList, lastUpdate);
                     }
                 }
 
                 @Override
-                public void onFailure(Call<Response> call, Throwable t) {
+                public void onFailure(@NotNull Call<Response> call, @NotNull Throwable t) {
                     responseCallback.onFailure(t.getMessage());
                 }
             });
         }
+        else {
+            Log.d(TAG, "Data read from the local database");
+            readDataFromDatabase(lastUpdate);
+        }
     }
 
-    private void readDataFromDatabase() {
+    private void readDataFromDatabase(long lastUpdate) {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
@@ -70,7 +80,7 @@ public class ExerciseRepository implements IExerciseRepository {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-               exerciseDao.deleteAll();
+                exerciseDao.deleteAll();
                 exerciseDao.insertExercise(exerciseList);
             }
         };

@@ -8,9 +8,10 @@ import retrofit2.http.Header;
 import retrofit2.http.Query;
 
 public interface ExercisesService {
-
     @GET("exercise")
-    Call<Response> getExercise(@Query("language") String lan,
+    Call<Response> getExercise(@Query("language") int lan,
+                               @Query("limit") int limit,
+                               @Query("offset") int offset,
                                @Header("Authorization") String apiKey);
 
 }

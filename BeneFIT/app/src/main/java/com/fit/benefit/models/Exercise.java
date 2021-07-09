@@ -34,15 +34,15 @@ public class Exercise implements Parcelable {
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
 
+
     //parcelable
-
-
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.id);
         dest.writeString(this.name);
         dest.writeString(this.description);
     }
+
 
     @Override
     public int describeContents() {
@@ -55,7 +55,7 @@ public class Exercise implements Parcelable {
         this.description = in.readString();
     }
 
-    public static final Creator<Exercise> CREATOR = new Creator<Exercise>() {
+    public static final Parcelable.Creator<Exercise> CREATOR = new Parcelable.Creator<Exercise>() {
         @Override
         public Exercise createFromParcel(Parcel in) {
             return new Exercise(in);

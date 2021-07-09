@@ -2,7 +2,7 @@ package com.fit.benefit.utils;
 
 public class Constants {
 
-    public static final String  EXERCISES_API_BASE_URL ="https://wger.de/api/v2/";
+    public static final String  EXERCISES_API_BASE_URL ="https://wger.de/api/v2/exercise";
 
     //public static final String  EXERCISES_IMAGE_API_URL = "api/v2/exerciseimage/?is_main=True";
 
