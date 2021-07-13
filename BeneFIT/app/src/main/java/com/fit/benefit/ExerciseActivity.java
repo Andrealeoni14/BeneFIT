@@ -159,4 +159,9 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseRecyc
         detail.putExtra("EXTRA_IMAGE", exercise.getImg());
         startActivity(detail);
     }
+
+    public void logoutClick(android.view.View view) {
+        LogoutActivity logout = new LogoutActivity();
+        logout.logoutFunction(ExerciseActivity.this);
+    }
 }

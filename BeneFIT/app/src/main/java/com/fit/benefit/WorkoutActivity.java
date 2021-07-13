@@ -125,4 +125,8 @@ public class WorkoutActivity extends AppCompatActivity {
         mRequestQueue.add(request);
         return img_url[0];
     }*/
+    public void logoutClick(android.view.View view) {
+        LogoutActivity logout = new LogoutActivity();
+        logout.logoutFunction(WorkoutActivity.this);
+    }
 }

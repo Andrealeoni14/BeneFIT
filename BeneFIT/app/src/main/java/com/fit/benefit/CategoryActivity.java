@@ -134,4 +134,9 @@ public class CategoryActivity extends AppCompatActivity {
         intent.putExtra("category", 14);
         startActivity(intent);
     }
+
+    public void logoutClick(android.view.View view) {
+        LogoutActivity logout = new LogoutActivity();
+        logout.logoutFunction(CategoryActivity.this);
+    }
 }
