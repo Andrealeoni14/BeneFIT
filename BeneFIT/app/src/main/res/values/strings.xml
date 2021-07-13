@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">BeneFIT</string>
+    <!-- Strings related to login -->
+    <string name="prompt_password" >Password</string>
+    <string name="action_sign_in">Let\'s Start!</string>
+    <string name="action_register">Let\'s Go!</string>
+    <string name="welcome">Welcome!</string>
+    <string name="invalid_email">Not a valid email</string>
+    <string name="invalid_password">Password must be >7 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="Welcome_back">Welcome Back!</string>
+    <string name="new_user">Don\'t have an account? Sign Up</string>
+    <string name="register">Register</string>
+    <string name="login" >Login</string>
+    <string name="e_mail">e-mail</string>
+    <string name="prompt_email">prompt_email</string>
+    <string name="conferma_password">Confirm Password</string>
+    <string name="username">Username</string>
+    <string name="title_activity_home">Exercises list</string>
+    <string name="enterAnyway">Guest access</string>
+    <string name="title_activity_category">Categories</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="category8">Arms</string>
+    <string name="category9">Legs</string>
+    <string name="category10">Abs</string>
+    <string name="category11">Chest</string>
+    <string name="category12">Back</string>
+    <string name="category13">Shoulders</string>
+    <string name="category14">Calves</string>
+    <string name="categorySaved">Saved workouts</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_workout">WorkoutActivity</string>
+    <string name="exercise_image">exercise_image</string>
+    <string name="exercise_name">Exercise Name</string>
+    <string name="description">Description</string>
+    <string name="save">Add to Saved workouts</string>
+</resources>
