@@ -22,25 +22,19 @@ public class ExerciseRecyclerViewAdapter extends RecyclerView.Adapter<ExerciseRe
 
     private Context mContext;
     private ArrayList<Exercise> exerciseList;
-    private OnItemClickListener listener;
-    private OnExerciseClickListener eListener;
+    private OnExerciseClickListener listener;
 
     public interface OnExerciseClickListener {
-        void onExerciseClick(Exercise exercise);
+        void onExerciseClick(Exercise exercise );
     }
 
-    public interface OnItemClickListener {
-        void onItemClick(int position);
-    }
 
-    public void setOnItemClickListener(OnExerciseClickListener listener) {
-        eListener = listener;
-    }
+    public void setOnItemClickListener(OnExerciseClickListener listener) { this.listener = listener; }
 
-    public ExerciseRecyclerViewAdapter(Context context, ArrayList<Exercise> exerciseList, OnExerciseClickListener eListener) {
+    public ExerciseRecyclerViewAdapter(Context context, ArrayList<Exercise> exerciseList, OnExerciseClickListener listener) {
         mContext = context;
         this.exerciseList = exerciseList;
-        this.eListener = eListener;
+        this.listener = listener;
     }
 
     @NonNull
@@ -91,7 +85,7 @@ public class ExerciseRecyclerViewAdapter extends RecyclerView.Adapter<ExerciseRe
                     if (listener != null) {
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
-                            listener.onItemClick(position);
+                            listener.onExerciseClick(exerciseList.get(position));
                         }
                     }
                     /*int position = getAdapterPosition();
