@@ -18,6 +18,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.fit.benefit.data.ExerciseRecyclerViewAdapter;
 import com.fit.benefit.models.Exercise;
+import com.fit.benefit.utils.Constants;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
 import org.json.JSONArray;
@@ -37,7 +38,7 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseRecyc
     private ArrayList<Exercise> mExerciseList;
     private RequestQueue mRequestQueue;
     private ProgressBar mProgress;
-    private ExerciseRecyclerViewAdapter.OnExerciseClickListener mListener;
+    private ExerciseRecyclerViewAdapter.OnExerciseClickListener listener;
     //private JsonParsing json;
 
     @Override
@@ -66,10 +67,10 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseRecyc
     private void parseJSON(int category) {
         String url;
         if (category == 0) { // means the user wants to see the saved workouts
-            url = "https://wger.de/api/v2/exercise/?language=2&limit=300&offset=0";
+            url = Constants.EXERCISES_API_BASE_URL;
         }
         else { // request url with language set to English (there's German too with id = 1)
-            url = "https://wger.de/api/v2/exercise/?language=2&limit=300&offset=0&category=" + category;
+            url = Constants.EXERCISES_API_CATEGORY_URL + category;
         }
         mProgress.setVisibility(View.VISIBLE);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
@@ -92,9 +93,9 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseRecyc
                                 mProgress.setVisibility(View.GONE);
                             }
 
-                            mAdapter = new ExerciseRecyclerViewAdapter(ExerciseActivity.this, mExerciseList, mListener);
+                            mAdapter = new ExerciseRecyclerViewAdapter(ExerciseActivity.this, mExerciseList, listener);
                             mRecyclerView.setAdapter(mAdapter);
-                            mAdapter.setOnItemClickListener(ExerciseActivity.this);
+                            mAdapter.setOnExerciseClickListener(ExerciseActivity.this);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -112,7 +113,7 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseRecyc
 
     private String imageJSON(int img) {
         final String[] img_url = new String[1];
-        String new_url = "https://wger.de/api/v2/exerciseimage/?is_main=true&exercise_base=" + img;
+        String new_url = Constants.EXERCISES_IMAGE_API_URL + img;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, new_url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -120,7 +121,7 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseRecyc
                         try {
                             JSONArray jsonArray = response.getJSONArray("results");
 
-                            if(jsonArray != null) {
+                            if(jsonArray != null & jsonArray.getJSONObject(0) != null) {
                                 JSONObject result = jsonArray.getJSONObject(0);
                                 img_url[0] = result.getString("image");
                             }
@@ -140,15 +141,6 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseRecyc
         return img_url[0];
     }
 
-    /*@Override
-    public void onItemClick(int position) {
-        Intent detail = new Intent(this, WorkoutActivity.class);
-        Exercise clickedExercise = mExerciseList.get(position);
-        detail.putExtra("EXTRA_NAME", clickedExercise.getName());
-        detail.putExtra("EXTRA_DESC", clickedExercise.getDescription());
-        detail.putExtra("EXTRA_IMAGE", clickedExercise.getImg());
-        startActivity(detail);
-    }*/
 
     @Override
     public void onExerciseClick(Exercise exercise) {

@@ -29,7 +29,7 @@ public class ExerciseRecyclerViewAdapter extends RecyclerView.Adapter<ExerciseRe
     }
 
 
-    public void setOnItemClickListener(OnExerciseClickListener listener) { this.listener = listener; }
+    public void setOnExerciseClickListener(OnExerciseClickListener listener) { this.listener = listener; }
 
     public ExerciseRecyclerViewAdapter(Context context, ArrayList<Exercise> exerciseList, OnExerciseClickListener listener) {
         mContext = context;

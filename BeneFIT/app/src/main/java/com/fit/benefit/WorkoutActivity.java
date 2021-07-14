@@ -49,13 +49,12 @@ public class WorkoutActivity extends AppCompatActivity {
         String description = extras.getString("EXTRA_DESC");
 
         ImageView im = findViewById(R.id.exe_image);
-        TextView n = findViewById(R.id.exe_name);
-        TextView d = findViewById(R.id.exe_description);
+        TextView textName = findViewById(R.id.exe_name);
+        TextView textDescription = findViewById(R.id.exe_description);
 
-        n.setText(name);
-        d.setText(description);
+        textName.setText(name);
+        textDescription.setText(description);
         Picasso.with(this).load(imageUrl).fit().centerInside().into(im);
-
 
         //jsonParse(workout);
     }

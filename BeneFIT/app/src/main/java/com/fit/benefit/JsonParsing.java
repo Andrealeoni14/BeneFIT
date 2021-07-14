@@ -31,10 +31,10 @@ public class JsonParsing {
                           RequestQueue mRequestQueue, ProgressBar mProgress, ExerciseRecyclerViewAdapter.OnExerciseClickListener mListener) {
         String url;
         if (category == 0) { // means the user wants to see the saved workouts
-            url = "https://wger.de/api/v2/exercise/?language=2&limit=300&offset=0";
+            url = Constants.EXERCISES_API_BASE_URL;
         }
         else { // request url with language set to English (there's German too with id = 1)
-            url = "https://wger.de/api/v2/exercise/?language=2&limit=300&offset=0&category=" + category;
+            url = Constants.EXERCISES_API_CATEGORY_URL + category;
         }
         mProgress.setVisibility(View.VISIBLE);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
@@ -59,7 +59,7 @@ public class JsonParsing {
 
                             mAdapter = new ExerciseRecyclerViewAdapter(context, mExerciseList, mListener);
                             mRecyclerView.setAdapter(mAdapter);
-                            mAdapter.setOnItemClickListener((ExerciseRecyclerViewAdapter.OnExerciseClickListener) JsonParsing.this);
+                            mAdapter.setOnExerciseClickListener((ExerciseRecyclerViewAdapter.OnExerciseClickListener) JsonParsing.this);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -77,7 +77,7 @@ public class JsonParsing {
 
     private String imageJSON(int img, RequestQueue mRequestQueue) {
         final String[] img_url = new String[1];
-        String new_url = "https://wger.de/api/v2/exerciseimage/?is_main=true&exercise_base=" + img;
+        String new_url = Constants.EXERCISES_IMAGE_API_URL + img;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, new_url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -85,7 +85,7 @@ public class JsonParsing {
                         try {
                             JSONArray jsonArray = response.getJSONArray("results");
 
-                            if(jsonArray != null) {
+                            if(jsonArray != null & jsonArray.getJSONObject(0) != null) {
                                 JSONObject result = jsonArray.getJSONObject(0);
                                 img_url[0] = result.getString("image");
                             }
