@@ -14,4 +14,7 @@ public class Constants {
     public static final String DATABASE_NAME = "exercise_database";
     public static final int DATABASE_VERSION = 1;
 
+    public static final String FIREBASE_DB = "";
+    public static final String USER = "users";
+    public static final String FAVORITE_EXERCISE = "favorite_Exercise";
 }
