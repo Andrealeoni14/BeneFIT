@@ -4,9 +4,7 @@ public class Constants {
 
     public static final String EXERCISES_API_BASE_URL = "https://wger.de/api/v2/exercise/?language=2&limit=300&offset=0";
     public static final String EXERCISES_API_CATEGORY_URL = "https://wger.de/api/v2/exercise/?language=2&limit=300&offset=0&category=";
-    public static final String  EXERCISES_IMAGE_API_URL = "https://wger.de/api/v2/exerciseimage/?is_main=True";
-    // alternativa
-    // String new_url = "https://wger.de/api/v2/exerciseimage/?is_main=true&exercise_base=" + img;
+    public static final String  EXERCISES_IMAGE_API_URL = "https://wger.de/api/v2/exerciseimage/?is_main=true&exercise_base=";
     
     public static final String  EXERCISES_API_KEY = "AIzaSyCXhEsEkCXOEgxwSL-ZpajbWLA_PGEAeMo";
 

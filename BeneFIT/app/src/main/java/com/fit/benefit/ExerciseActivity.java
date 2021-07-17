@@ -34,11 +34,11 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseRecyc
     public static final String EXTRA_IMAGE = "image";
 
     private RecyclerView mRecyclerView;
-    private ExerciseRecyclerViewAdapter mAdapter;
     private ArrayList<Exercise> mExerciseList;
+    private ExerciseRecyclerViewAdapter.OnExerciseClickListener listener;
+    private ExerciseRecyclerViewAdapter mAdapter;
     private RequestQueue mRequestQueue;
     private ProgressBar mProgress;
-    private ExerciseRecyclerViewAdapter.OnExerciseClickListener listener;
     //private JsonParsing json;
 
     @Override
@@ -52,8 +52,8 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseRecyc
         mProgress = findViewById(R.id.loading);
 
         mRecyclerView = findViewById(R.id.exercises_list);
-        mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setHasFixedSize(true);
 
         mExerciseList = new ArrayList<>();
 
@@ -146,9 +146,9 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseRecyc
     public void onExerciseClick(Exercise exercise) {
         Intent detail = new Intent(this, WorkoutActivity.class);
         //Exercise clickedExercise = mExerciseList.get(position);
-        detail.putExtra("EXTRA_NAME", exercise.getName());
-        detail.putExtra("EXTRA_DESC", exercise.getDescription());
-        detail.putExtra("EXTRA_IMAGE", exercise.getImg());
+        detail.putExtra(EXTRA_NAME, exercise.getName());
+        detail.putExtra(EXTRA_DESC, exercise.getDescription());
+        detail.putExtra(EXTRA_IMAGE, exercise.getImg());
         startActivity(detail);
     }
 

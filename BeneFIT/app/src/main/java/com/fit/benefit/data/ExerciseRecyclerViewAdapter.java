@@ -28,7 +28,6 @@ public class ExerciseRecyclerViewAdapter extends RecyclerView.Adapter<ExerciseRe
         void onExerciseClick(Exercise exercise );
     }
 
-
     public void setOnExerciseClickListener(OnExerciseClickListener listener) { this.listener = listener; }
 
     public ExerciseRecyclerViewAdapter(Context context, ArrayList<Exercise> exerciseList, OnExerciseClickListener listener) {
@@ -40,7 +39,7 @@ public class ExerciseRecyclerViewAdapter extends RecyclerView.Adapter<ExerciseRe
     @NonNull
     @Override
     public ExercisesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext)
+        View view = LayoutInflater.from(parent.getContext()) //prima mContext
                 .inflate(R.layout.exercise_cardview, parent, false);
         //view.setOnClickListener((View.OnClickListener) eListener);
         return new ExercisesViewHolder(view);
@@ -49,13 +48,15 @@ public class ExerciseRecyclerViewAdapter extends RecyclerView.Adapter<ExerciseRe
     @Override
     public void onBindViewHolder(@NonNull ExercisesViewHolder holder, int position) {
         Exercise currentItem = exerciseList.get(position);
-        //holder.bind(listOfExercises.get(position));
+        //holder.bind(exerciseList.get(position));
         int id = currentItem.getId();
         String name = currentItem.getName();
         String imageUrl = currentItem.getImg();
-        //String description = currentItem.getDescription();
+        String description = currentItem.getDescription();
         holder.nameTextView.setText(name);
-        Picasso.with(mContext).load(imageUrl).fit().centerInside().into(holder.mImage);
+        Picasso.with(mContext).load(imageUrl).fit().placeholder(R.drawable.front).into(holder.mImage);
+
+        //Picasso.with(mContext).load(imageUrl).fit().centerInside().into(holder.mImage);
     }
 
     @Override
@@ -97,10 +98,11 @@ public class ExerciseRecyclerViewAdapter extends RecyclerView.Adapter<ExerciseRe
 
         /*public void bind(Exercise exercise) {
 
+            Picasso.with(mContext).load(exercise.getImg()).fit().placeholder(R.drawable.front).into(mImage);
             nameTextView.setText(exercise.getName());
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
-                    eListener.onExerciseClick(exercise);
+                    listener.onExerciseClick(exercise);
                 }
             });
         }*/
