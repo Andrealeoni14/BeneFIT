@@ -24,7 +24,7 @@ import com.google.android.material.appbar.CollapsingToolbarLayout;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import org.jsoup.*;
 import java.util.ArrayList;
 
 public class ExerciseActivity extends AppCompatActivity implements ExerciseRecyclerViewAdapter.OnExerciseClickListener {
@@ -32,9 +32,11 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseRecyc
     public static final String EXTRA_NAME = "name";
     public static final String EXTRA_DESC = "description";
     public static final String EXTRA_IMAGE = "image";
+    public static String img_url;
 
     private RecyclerView mRecyclerView;
-    private ArrayList<Exercise> mExerciseList;
+    private final ArrayList<Exercise> mExerciseList = new ArrayList<>();
+	private final ArrayList<String> imagesArray = new ArrayList<>();
     private ExerciseRecyclerViewAdapter.OnExerciseClickListener listener;
     private ExerciseRecyclerViewAdapter mAdapter;
     private RequestQueue mRequestQueue;
@@ -54,8 +56,6 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseRecyc
         mRecyclerView = findViewById(R.id.exercises_list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setHasFixedSize(true);
-
-        mExerciseList = new ArrayList<>();
 
         mRequestQueue = Volley.newRequestQueue(this);
         Intent intent = getIntent();
@@ -84,15 +84,17 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseRecyc
                                 JSONObject result = jsonArray.getJSONObject(i);
 
                                 String name = result.getString("name");
-                                String description = result.getString("description");
+                                String description = Jsoup.parse(result.getString(
+                                        "description")).text();
+                                //String description = result.getString("description");
                                 int id = result.getInt("id");
                                 int img = result.getInt("exercise_base");
-                                String img_url = imageJSON(img);
+                                imageJSON(img);
 
-                                mExerciseList.add(new Exercise(id, name, description, img_url));
+                                mExerciseList.add(new Exercise(id, name, description, null));
+								setImg_url();
                                 mProgress.setVisibility(View.GONE);
                             }
-
                             mAdapter = new ExerciseRecyclerViewAdapter(ExerciseActivity.this, mExerciseList, listener);
                             mRecyclerView.setAdapter(mAdapter);
                             mAdapter.setOnExerciseClickListener(ExerciseActivity.this);
@@ -111,25 +113,30 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseRecyc
         mRequestQueue.add(request);
     }
 
-    private String imageJSON(int img) {
+    private void imageJSON(int img) {
         final String[] img_url = new String[1];
         String new_url = Constants.EXERCISES_IMAGE_API_URL + img;
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, new_url, null,
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.GET, new_url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        int exerciseID = -1;
+                        String url;
                         try {
                             JSONArray jsonArray = response.getJSONArray("results");
 
-                            if(jsonArray != null & jsonArray.getJSONObject(0) != null) {
+                            if (jsonArray.length() != 0 &&
+                                    jsonArray.getJSONObject(0) != null) {
                                 JSONObject result = jsonArray.getJSONObject(0);
-                                img_url[0] = result.getString("image");
-                            }
-                            else
-                                img_url[0] = null;
+                                url = result.getString("image");
+                                exerciseID = result.getInt("id");
+                            } else
+                                url = null;
                         } catch (JSONException e) {
-                            e.printStackTrace();
+                            url = null;
                         }
+                        imagesArray.add(url);
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -138,7 +145,6 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseRecyc
             }
         });
         mRequestQueue.add(request);
-        return img_url[0];
     }
 
 
@@ -155,5 +161,14 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseRecyc
     public void logoutClick(android.view.View view) {
         LogoutActivity logout = new LogoutActivity();
         logout.logoutFunction(ExerciseActivity.this);
+    }
+
+    public void setImg_url() {
+        if((mExerciseList.size() > 0) &&
+			(imagesArray.size() == mExerciseList.size())) {
+				for(int i=0; i<mExerciseList.size(); i++) {
+					mExerciseList.get(i).setImg(imagesArray.get(i));
+				}
+		}
     }
 }

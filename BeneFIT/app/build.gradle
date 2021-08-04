@@ -53,6 +53,7 @@ dependencies {
     //room
     implementation "androidx.room:room-runtime:2.3.0"
     implementation 'com.google.firebase:firebase-database:20.0.0'
+    implementation files('C:\\Users\\user\\Desktop\\BeneFIT_new\\app\\libs\\jsoup-1.14.1.jar')
     annotationProcessor "androidx.room:room-compiler:2.3.0"
 
     //OkHttp (It is necessary to manage Android versions < 21)
