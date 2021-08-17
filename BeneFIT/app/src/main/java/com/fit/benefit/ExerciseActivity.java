@@ -41,6 +41,7 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseRecyc
     private ExerciseRecyclerViewAdapter mAdapter;
     private RequestQueue mRequestQueue;
     private ProgressBar mProgress;
+    private int imgCont =0;
     //private JsonParsing json;
 
     @Override
@@ -89,10 +90,10 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseRecyc
                                 //String description = result.getString("description");
                                 int id = result.getInt("id");
                                 int img = result.getInt("exercise_base");
-                                imageJSON(img);
 
+                                    imageJSON(img);
                                 mExerciseList.add(new Exercise(id, name, description, null));
-								setImg_url();
+                                //setImg_url();
                                 mProgress.setVisibility(View.GONE);
                             }
                             mAdapter = new ExerciseRecyclerViewAdapter(ExerciseActivity.this, mExerciseList, listener);
@@ -136,7 +137,9 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseRecyc
                         } catch (JSONException e) {
                             url = null;
                         }
-                        imagesArray.add(url);
+                        mExerciseList.get(imgCont).setImg(url);
+                        imgCont++;
+                        //imagesArray.add(url);
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -163,12 +166,16 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseRecyc
         logout.logoutFunction(ExerciseActivity.this);
     }
 
-    public void setImg_url() {
+    public boolean setImg_url() {
         if((mExerciseList.size() > 0) &&
 			(imagesArray.size() == mExerciseList.size())) {
 				for(int i=0; i<mExerciseList.size(); i++) {
 					mExerciseList.get(i).setImg(imagesArray.get(i));
 				}
+				return true;
 		}
+        else {
+            return false;
+        }
     }
 }
