@@ -21,7 +21,7 @@
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:src="@drawable/logoutbutton"
+                android:src="@drawable/baseline_logout"
                 android:layout_gravity="end"
                 android:onClick="logoutClick"
                 android:background="@color/orange"
