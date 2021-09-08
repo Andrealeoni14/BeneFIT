@@ -53,7 +53,7 @@ public class JsonParsing {
                                 int img = result.getInt("exercise_base");
                                 String img_url = imageJSON(img, mRequestQueue);
 
-                                mExerciseList.add(new Exercise(id, name, description, img_url));
+                                mExerciseList.add(new Exercise(id, name, description, img_url, category, i));
                                 mProgress.setVisibility(View.GONE);
                             }
 

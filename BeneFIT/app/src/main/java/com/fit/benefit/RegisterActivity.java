@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,13 +18,22 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.fit.benefit.LoginActivity.NCat;
+import static com.fit.benefit.LoginActivity.fCat;
+import static com.fit.benefit.LoginActivity.favorites;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    EditText mEmail, mPassword, mPassword2;
-    Button mRegisterBtn;
-    FirebaseAuth fAuth;
-    ProgressBar mProgress;
+    private EditText mEmail, mPassword, mPassword2;
+    private Button mRegisterBtn;
+    private FirebaseAuth fAuth;
+    private ProgressBar mProgress;
 
 
     @Override
@@ -72,6 +82,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 mProgress.setVisibility(View.GONE);
                                 if (task.isSuccessful()) {
                                     FirebaseUser user = fAuth.getCurrentUser();
+                                    createDB(user);
                                     updateUI(user);
                                 } else {
                                     Toast.makeText(RegisterActivity.this, "Error ! " +
@@ -86,6 +97,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void updateUI(FirebaseUser user) {
         if(user != null) {
+            Log.e("Endless", "Enter 0");
             fAuth.signInWithEmailAndPassword(mEmail.getText().toString().trim(),
                     mPassword.getText().toString().trim()).addOnCompleteListener(this,
                     new OnCompleteListener<AuthResult> () {
@@ -101,6 +113,7 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                     });
             Intent intent = new Intent (this, CategoryActivity.class);
+            Log.e("Endless", "Exit 0");
             startActivity(intent);
         } else {
             Toast.makeText(RegisterActivity.this, "Error", Toast.LENGTH_SHORT).show();
@@ -112,5 +125,17 @@ public class RegisterActivity extends AppCompatActivity {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = fAuth.getCurrentUser();
+    }
+
+    private void createDB(FirebaseUser user) {
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        for (int i = 0; i < NCat; i++) {
+            Map<String, Object> size = new HashMap<>();
+            size.put("Size", 0);
+            database.collection(user.getUid()).document(Integer.toString(i+fCat)).set(size);
+        }
+        for (int i = 0; i < NCat; i++) {
+            favorites[i] = new ArrayList<Integer>();
+        }
     }
 }

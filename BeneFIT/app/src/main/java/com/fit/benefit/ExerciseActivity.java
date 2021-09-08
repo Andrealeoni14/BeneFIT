@@ -2,6 +2,7 @@ package com.fit.benefit;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -27,21 +28,26 @@ import org.json.JSONObject;
 import org.jsoup.*;
 import java.util.ArrayList;
 
+import static com.fit.benefit.LoginActivity.NCat;
+import static com.fit.benefit.LoginActivity.fCat;
+import static com.fit.benefit.LoginActivity.favorites;
+
 public class ExerciseActivity extends AppCompatActivity implements ExerciseRecyclerViewAdapter.OnExerciseClickListener {
 
     public static final String EXTRA_NAME = "name";
     public static final String EXTRA_DESC = "description";
     public static final String EXTRA_IMAGE = "image";
-    public static String img_url;
+    public static final String EXTRA_CAT = "category";
+    public static final String EXTRA_INDEX = "index";
 
     private RecyclerView mRecyclerView;
     private final ArrayList<Exercise> mExerciseList = new ArrayList<>();
-	private final ArrayList<String> imagesArray = new ArrayList<>();
     private ExerciseRecyclerViewAdapter.OnExerciseClickListener listener;
     private ExerciseRecyclerViewAdapter mAdapter;
     private RequestQueue mRequestQueue;
     private ProgressBar mProgress;
     private int imgCont =0;
+    private int i = 0;
     //private JsonParsing json;
 
     @Override
@@ -68,11 +74,52 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseRecyc
     private void parseJSON(int category) {
         String url;
         if (category == 0) { // means the user wants to see the saved workouts
-            url = Constants.EXERCISES_API_BASE_URL;
+            //url = Constants.EXERCISES_API_BASE_URL;
+            for(i = 0; i < NCat; i++) {
+                Log.e("tag_i", Integer.toString(i));
+                Log.e("tag_f", favorites[i].toString());
+                if(!favorites[i].isEmpty()) {
+                    url = Constants.EXERCISES_API_CATEGORY_URL + (i+fCat);
+                    JsonObjectRequest request = new JsonObjectRequest(url, null,
+                            new Response.Listener<JSONObject>(){
+                                @Override
+                                public void onResponse(JSONObject response) {
+                                    try {
+                                        JSONArray jsonArray = response.getJSONArray(
+                                                "results");
+                                        int category = Integer.parseInt(jsonArray
+                                                .getJSONObject(0).getString("category"));
+                                        int catIndex = category - fCat;
+                                        Log.e("tag_cat_en", Integer.toString(catIndex));
+                                        for(int j = 0; j<favorites[catIndex].size(); j++) {
+                                            JSONObject result = jsonArray.getJSONObject(
+                                                    favorites[catIndex].get(j));
+                                            String name = result.getString("name");
+                                            String description = Jsoup.parse(result.getString(
+                                                    "description")).text();
+                                            int id =result.getInt("id");
+                                            int img = result.getInt("exercise_base");
+                                            imageJSON(img);
+                                            mExerciseList.add(new Exercise(id, name, description,
+                                                    null, category,
+                                                    favorites[catIndex].get(j)));
+                                            mProgress.setVisibility(View.GONE);
+                                            Log.e("tag_cat_ex", Integer.toString(id));
+                                        }
+                                        mAdapter = new ExerciseRecyclerViewAdapter(
+                                                ExerciseActivity.this, mExerciseList, listener);
+                                        mRecyclerView.setAdapter(mAdapter);
+                                        mAdapter.setOnExerciseClickListener(ExerciseActivity.this);
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }, null);
+                    mRequestQueue.add(request);
+                }
+            }
         }
-        else { // request url with language set to English (there's German too with id = 1)
-            url = Constants.EXERCISES_API_CATEGORY_URL + category;
-        }
+        url = Constants.EXERCISES_API_CATEGORY_URL + category;
         mProgress.setVisibility(View.VISIBLE);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
@@ -91,8 +138,8 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseRecyc
                                 int id = result.getInt("id");
                                 int img = result.getInt("exercise_base");
 
-                                    imageJSON(img);
-                                mExerciseList.add(new Exercise(id, name, description, null));
+                                imageJSON(img);
+                                mExerciseList.add(new Exercise(id, name, description, null, category, i));
                                 //setImg_url();
                                 mProgress.setVisibility(View.GONE);
                             }
@@ -115,14 +162,12 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseRecyc
     }
 
     private void imageJSON(int img) {
-        final String[] img_url = new String[1];
         String new_url = Constants.EXERCISES_IMAGE_API_URL + img;
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.GET, new_url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        int exerciseID = -1;
                         String url;
                         try {
                             JSONArray jsonArray = response.getJSONArray("results");
@@ -131,7 +176,6 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseRecyc
                                     jsonArray.getJSONObject(0) != null) {
                                 JSONObject result = jsonArray.getJSONObject(0);
                                 url = result.getString("image");
-                                exerciseID = result.getInt("id");
                             } else
                                 url = null;
                         } catch (JSONException e) {
@@ -158,6 +202,8 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseRecyc
         detail.putExtra(EXTRA_NAME, exercise.getName());
         detail.putExtra(EXTRA_DESC, exercise.getDescription());
         detail.putExtra(EXTRA_IMAGE, exercise.getImg());
+        detail.putExtra(EXTRA_CAT, exercise.getCategory());
+        detail.putExtra(EXTRA_INDEX, exercise.getIndex());
         startActivity(detail);
     }
 
@@ -166,7 +212,7 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseRecyc
         logout.logoutFunction(ExerciseActivity.this);
     }
 
-    public boolean setImg_url() {
+    /*public boolean setImg_url() {
         if((mExerciseList.size() > 0) &&
 			(imagesArray.size() == mExerciseList.size())) {
 				for(int i=0; i<mExerciseList.size(); i++) {
@@ -177,5 +223,5 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseRecyc
         else {
             return false;
         }
-    }
+    }*/
 }

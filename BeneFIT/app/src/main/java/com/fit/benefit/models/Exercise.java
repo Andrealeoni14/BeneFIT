@@ -19,12 +19,16 @@ public class Exercise implements Parcelable {
     private String name;
     private String description;
     private String img;
+    private int category;
+    private int index;
 
-    public Exercise(int id, String name, String description, String img){
+    public Exercise(int id, String name, String description, String img, int category, int index){
         this.id = id;
         this.name = name;
         this.description =  description;
         this.img = img;
+        this.category = category;
+        this.index = index;
     }
 
     //getters e setters
@@ -38,6 +42,10 @@ public class Exercise implements Parcelable {
     public void setDescription(String description) { this.description = description; }
     public String getImg() { return img; }
     public void setImg(String img) { this.img = img; }
+    public int getCategory() { return this.category; }
+    public void setCategory(int category) { this.category = category; }
+    public int getIndex() { return this.index; }
+    public void setIndex(int index) { this.index = index; }
 
     //parcelable
     @Override
@@ -46,6 +54,7 @@ public class Exercise implements Parcelable {
         dest.writeString(this.name);
         dest.writeString(this.description);
         dest.writeString(this.img);
+        dest.writeString(Integer.toString(this.category));
     }
 
     @Override
@@ -58,6 +67,7 @@ public class Exercise implements Parcelable {
         this.name = in.readString();
         this.description = in.readString();
         this.img = in.readString();
+        this.category = Integer.parseInt(in.readString());
     }
 
     public static final Parcelable.Creator<Exercise> CREATOR = new Parcelable.Creator<Exercise>() {
