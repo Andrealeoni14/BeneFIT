@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">BeneFIT</string>
+    <!-- Strings related to login -->
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Let\'s Start!</string>
+    <string name="action_register">Let\'s Go!</string>
+    <string name="welcome">Welcome!</string>
+    <string name="Welcome_back">Welcome Back!</string>
+    <string name="register">Register</string>
+    <string name="login">Login</string>
+    <string name="e_mail">e-mail</string>
+    <string name="conferma_password">Confirm Password</string>
+    <string name="title_activity_home">Exercises list</string>
+    <string name="enterAnyway">Guest access</string>
+    <string name="title_activity_category">Categories</string>
+
+    <string name="category8">Arms</string>
+    <string name="category9">Legs</string>
+    <string name="category10">Abs</string>
+    <string name="category11">Chest</string>
+    <string name="category12">Back</string>
+    <string name="category13">Shoulders</string>
+    <string name="category14">Calves</string>
+    <string name="categorySaved">Saved workouts</string>
+    <string name="title_activity_workout">WorkoutActivity</string>
+    <string name="exercise_image">exercise_image</string>
+    <string name="exercise_name">Exercise Name</string>
+    <string name="description">Description</string>
+    <string name="save">Add to Saved workouts</string>
+    <string name="remSave">Remove from saved workouts</string>
+    <string name="action_settings">action_settings</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
