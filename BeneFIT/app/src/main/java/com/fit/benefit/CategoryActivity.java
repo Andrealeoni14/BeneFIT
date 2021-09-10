@@ -139,4 +139,9 @@ public class CategoryActivity extends AppCompatActivity {
         LogoutActivity logout = new LogoutActivity();
         logout.logoutFunction(CategoryActivity.this);
     }
+
+    @Override
+    public void onBackPressed() {
+
+    }
 }

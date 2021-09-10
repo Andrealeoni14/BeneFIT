@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         home = (Button) findViewById(R.id.home);
+        home.setVisibility(View.INVISIBLE);
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     public void login() {
         Intent intent = new Intent (this, LoginActivity.class);
         startActivity(intent);
+        finish();
     }
     public void register() {
         Intent intent = new Intent (this, RegisterActivity.class);
@@ -56,4 +58,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }
