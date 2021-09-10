@@ -8,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.Arrays;
+
 import static com.fit.benefit.LoginActivity.favorites;
 
 public class LogoutActivity extends AppCompatActivity {
@@ -20,7 +22,7 @@ public class LogoutActivity extends AppCompatActivity {
     public void logoutFunction(Context context) {
         if(user != null) {
             FirebaseAuth.getInstance().signOut();
-			favorites = null;
+            Arrays.fill(favorites, null);
         }
         Intent intent = new Intent(context, MainActivity.class);
         context.startActivity(intent);

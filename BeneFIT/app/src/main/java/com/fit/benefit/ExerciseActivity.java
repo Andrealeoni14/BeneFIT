@@ -75,6 +75,7 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseRecyc
         String url;
         if (category == 0) { // means the user wants to see the saved workouts
             //url = Constants.EXERCISES_API_BASE_URL;
+            mProgress.setVisibility(View.VISIBLE);
             for(i = 0; i < NCat; i++) {
                 Log.e("tag_i", Integer.toString(i));
                 Log.e("tag_f", favorites[i].toString());
@@ -117,6 +118,7 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseRecyc
                             }, null);
                     mRequestQueue.add(request);
                 }
+                mProgress.setVisibility(View.GONE);
             }
         }
         url = Constants.EXERCISES_API_CATEGORY_URL + category;
