@@ -48,6 +48,7 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseRecyc
     private ProgressBar mProgress;
     private int imgCont =0;
     private int i = 0;
+    private int j = 0;
     //private JsonParsing json;
 
     @Override
@@ -77,8 +78,6 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseRecyc
             //url = Constants.EXERCISES_API_BASE_URL;
             mProgress.setVisibility(View.VISIBLE);
             for(i = 0; i < NCat; i++) {
-                Log.e("tag_i", Integer.toString(i));
-                Log.e("tag_f", favorites[i].toString());
                 if(!favorites[i].isEmpty()) {
                     url = Constants.EXERCISES_API_CATEGORY_URL + (i+fCat);
                     JsonObjectRequest request = new JsonObjectRequest(url, null,

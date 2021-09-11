@@ -33,8 +33,9 @@ android {
 dependencies {
     // firebase
     implementation platform('com.google.firebase:firebase-bom:28.0.1')
-    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-analytics:19.0.0'
     implementation 'com.google.firebase:firebase-auth:21.0.1'
+    implementation 'io.grpc:grpc-okhttp:1.32.2'
 
     //volley dependencies
     implementation 'com.android.volley:volley:1.2.1'
@@ -52,7 +53,7 @@ dependencies {
 
     //room
     implementation "androidx.room:room-runtime:2.3.0"
-    implementation 'com.google.firebase:firebase-database:20.0.0'
+    implementation 'com.google.firebase:firebase-database:20.0.1'
     implementation files('libs/jsoup-1.14.1.jar')
     implementation 'com.google.firebase:firebase-firestore:23.0.3'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
