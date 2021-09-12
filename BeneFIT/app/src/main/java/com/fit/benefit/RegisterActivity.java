@@ -1,3 +1,4 @@
+// activity for the registration of the user
 package com.fit.benefit;
 
 import androidx.annotation.NonNull;
@@ -50,7 +51,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         mRegisterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) { // makes sure all data is inserted and the password is long enough
                 String email = mEmail.getText().toString().trim();
                 String password = mPassword.getText().toString().trim();
                 String password2 = mPassword2.getText().toString().trim();
@@ -72,9 +73,9 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
 
+                mProgress.setVisibility(View.VISIBLE); // hides loading animation
 
-                mProgress.setVisibility(View.VISIBLE);
-
+                // register the user on firebase
                 fAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(
                         new OnCompleteListener<AuthResult>() {
                             @Override
@@ -95,9 +96,9 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
+    // goes to the category activity
     private void updateUI(FirebaseUser user) {
         if(user != null) {
-            Log.e("Endless", "Enter 0");
             fAuth.signInWithEmailAndPassword(mEmail.getText().toString().trim(),
                     mPassword.getText().toString().trim()).addOnCompleteListener(this,
                     new OnCompleteListener<AuthResult> () {
@@ -113,7 +114,6 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                     });
             Intent intent = new Intent (this, CategoryActivity.class);
-            Log.e("Endless", "Exit 0");
             startActivity(intent);
         } else {
             Toast.makeText(RegisterActivity.this, "Error", Toast.LENGTH_SHORT).show();
@@ -127,6 +127,7 @@ public class RegisterActivity extends AppCompatActivity {
         FirebaseUser currentUser = fAuth.getCurrentUser();
     }
 
+    // create the database on firestore
     private void createDB(FirebaseUser user) {
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         for (int i = 0; i < NCat; i++) {

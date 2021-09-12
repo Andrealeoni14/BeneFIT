@@ -140,8 +140,9 @@ public class CategoryActivity extends AppCompatActivity {
         logout.logoutFunction(CategoryActivity.this);
     }
 
+
+    // disable the back button
     @Override
     public void onBackPressed() {
-
     }
 }

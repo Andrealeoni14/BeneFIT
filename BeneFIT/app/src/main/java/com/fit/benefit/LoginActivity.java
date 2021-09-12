@@ -1,3 +1,4 @@
+// activity for logging in the user
 package com.fit.benefit;
 
 import androidx.annotation.NonNull;
@@ -36,9 +37,9 @@ public class LoginActivity extends AppCompatActivity {
     ProgressBar progress;
     Button loginButton;
     EditText email, password;
-    public static final int NCat = 7;
-    public static final int fCat = 8;
-    public static ArrayList<Integer>[] favorites = new ArrayList[NCat];
+    public static final int NCat = 7; // number of categories
+    public static final int fCat = 8; // first category ID
+    public static ArrayList<Integer>[] favorites = new ArrayList[NCat]; // saved workouts arrayList
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,11 +55,12 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull @NotNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
+                if (user != null) { // if the user is already logged in then it goes directly to the Category Activity
                     getFavorites(user);
                     updateUI(user);
                 }
 
+                // checking for errors in user inserted Email or Password
                 loginButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -72,6 +74,7 @@ public class LoginActivity extends AppCompatActivity {
                             password.setError("Password is required");
                         }
 
+                        // login via firebase
                         progress.setVisibility(View.VISIBLE);
                         auth.signInWithEmailAndPassword(strEmail, strPassword).addOnCompleteListener(
                                 new OnCompleteListener<AuthResult>() {
@@ -104,6 +107,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    // gets favourites workouts saved in firebase by the user
     private void getFavorites(FirebaseUser user) {
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         CollectionReference collRef = database.collection(user.getUid());
@@ -145,6 +149,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    // sorts categories of workouts on firebase
     public static int findCatIndex(List<DocumentSnapshot> categories, int offset) {
         int catIndex;
         if (!categories.isEmpty()) {

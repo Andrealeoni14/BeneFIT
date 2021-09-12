@@ -1,3 +1,4 @@
+// lists the workouts of a given category or the user saved ones
 package com.fit.benefit;
 
 import android.content.Intent;
@@ -72,10 +73,10 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseRecyc
         parseJSON(category);
     }
 
+    // analyze the JSON response and fetches the data for the workouts
     private void parseJSON(int category) {
         String url;
         if (category == 0) { // means the user wants to see the saved workouts
-            //url = Constants.EXERCISES_API_BASE_URL;
             mProgress.setVisibility(View.VISIBLE);
             for(i = 0; i < NCat; i++) {
                 if(!favorites[i].isEmpty()) {
@@ -135,16 +136,16 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseRecyc
                                 String name = result.getString("name");
                                 String description = Jsoup.parse(result.getString(
                                         "description")).text();
-                                //String description = result.getString("description");
                                 int id = result.getInt("id");
                                 int img = result.getInt("exercise_base");
 
                                 imageJSON(img);
-                                mExerciseList.add(new Exercise(id, name, description, null, category, i));
-                                //setImg_url();
+                                mExerciseList.add(new Exercise(id, name, description, null,
+                                        category, i));
                                 mProgress.setVisibility(View.GONE);
                             }
-                            mAdapter = new ExerciseRecyclerViewAdapter(ExerciseActivity.this, mExerciseList, listener);
+                            mAdapter = new ExerciseRecyclerViewAdapter(ExerciseActivity.this,
+                                    mExerciseList, listener);
                             mRecyclerView.setAdapter(mAdapter);
                             mAdapter.setOnExerciseClickListener(ExerciseActivity.this);
 
@@ -162,6 +163,8 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseRecyc
         mRequestQueue.add(request);
     }
 
+
+    // if available, it takes the workout image from the JSON file
     private void imageJSON(int img) {
         String new_url = Constants.EXERCISES_IMAGE_API_URL + img;
         JsonObjectRequest request = new JsonObjectRequest(
@@ -184,7 +187,6 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseRecyc
                         }
                         mExerciseList.get(imgCont).setImg(url);
                         imgCont++;
-                        //imagesArray.add(url);
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -195,11 +197,10 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseRecyc
         mRequestQueue.add(request);
     }
 
-
+    // when the user clicks on a workout it passes all the data to the workout activity
     @Override
     public void onExerciseClick(Exercise exercise) {
         Intent detail = new Intent(this, WorkoutActivity.class);
-        //Exercise clickedExercise = mExerciseList.get(position);
         detail.putExtra(EXTRA_NAME, exercise.getName());
         detail.putExtra(EXTRA_DESC, exercise.getDescription());
         detail.putExtra(EXTRA_IMAGE, exercise.getImg());
@@ -212,17 +213,4 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseRecyc
         LogoutActivity logout = new LogoutActivity();
         logout.logoutFunction(ExerciseActivity.this);
     }
-
-    /*public boolean setImg_url() {
-        if((mExerciseList.size() > 0) &&
-			(imagesArray.size() == mExerciseList.size())) {
-				for(int i=0; i<mExerciseList.size(); i++) {
-					mExerciseList.get(i).setImg(imagesArray.get(i));
-				}
-				return true;
-		}
-        else {
-            return false;
-        }
-    }*/
 }

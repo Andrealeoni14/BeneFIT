@@ -1,3 +1,4 @@
+// activity for viewing the workout details
 package com.fit.benefit;
 
 import android.content.Intent;
@@ -48,7 +49,7 @@ public class WorkoutActivity extends AppCompatActivity {
     private int category;
     private int index;
 
-    private int i=0;
+    private int i = 0;
     private boolean favorite = false;
     private int catIndex;
     private Button favoriteButton;
@@ -75,6 +76,7 @@ public class WorkoutActivity extends AppCompatActivity {
         TextView textName = findViewById(R.id.exe_name);
         TextView textDescription = findViewById(R.id.exe_description);
 
+        // checks if the workout is already in favourites
         catIndex = category - fCat;
         while((i < favorites[catIndex].size())&&(!favorite)) {
             if(favorites[catIndex].get(i)==index) {
@@ -99,6 +101,8 @@ public class WorkoutActivity extends AppCompatActivity {
         }
     }
 
+
+    // adds or remove the workout to the saved ones on firestore
     public void favorite(android.view.View View) {
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         Map<String, Object> update = new HashMap<>();
@@ -142,6 +146,8 @@ public class WorkoutActivity extends AppCompatActivity {
         }
     }
 
+
+    // modify the size field on firestore (the variable counts how many saved workouts there are)
     public void changeSize(CollectionReference collRef, Task<QuerySnapshot> task, boolean add) {
         QuerySnapshot collection = task.getResult();
         List<DocumentSnapshot> categories = collection.getDocuments();
@@ -158,6 +164,7 @@ public class WorkoutActivity extends AppCompatActivity {
         collRef.document(Integer.toString(category))
                 .set(nSize, SetOptions.merge());
     }
+
 
     public void logoutClick(android.view.View view) {
         LogoutActivity logout = new LogoutActivity();

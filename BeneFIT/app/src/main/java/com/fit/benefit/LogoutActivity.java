@@ -1,3 +1,4 @@
+// method used for logging out the user
 package com.fit.benefit;
 
 import android.content.Context;
