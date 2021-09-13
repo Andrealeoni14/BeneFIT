@@ -118,6 +118,7 @@ public class WorkoutActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
+                                favorites = true;
                                 changeSize(collRef, task, true);
                                 favoriteButton.setText(R.string.remSave);
                             }
@@ -131,6 +132,7 @@ public class WorkoutActivity extends AppCompatActivity {
             currentCat.update(update).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull @NotNull Task<Void> task) {
+                    favorites = false;
                     favoriteButton.setText(R.string.save);
                 }
             });
