@@ -12,10 +12,12 @@ import androidx.room.PrimaryKey;
 
 public class Exercise implements Parcelable {
 
-    @PrimaryKey(autoGenerate = true)
-    private int idRoom;
+    //@PrimaryKey(autoGenerate = true)
+    //private int idRoom;
 
+    @PrimaryKey
     private int id;
+
     private String name;
     private String description;
     private String img;
@@ -32,8 +34,8 @@ public class Exercise implements Parcelable {
     }
 
     //getters e setters
-    public int getIdRoom() { return idRoom; }
-    public void setIdRoom(int idRoom) { this.idRoom = idRoom; }
+    //public int getIdRoom() { return idRoom; }
+    //public void setIdRoom(int idRoom) { this.idRoom = idRoom; }
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
     public String getName() { return name; }

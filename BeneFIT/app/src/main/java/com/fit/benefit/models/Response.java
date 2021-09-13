@@ -13,7 +13,7 @@ public class Response implements Parcelable {
     private List<Exercise> exerciseList;
 
 
-    public Response(List<Exercise> exerciseList) {
+    public Response(String message, int i, List<Exercise> exerciseList, boolean b) {
         this.exerciseList = exerciseList;
     }
 

@@ -19,6 +19,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.fit.benefit.data.ExerciseRecyclerViewAdapter;
+import com.fit.benefit.database.ExerciseRoomDatabase;
 import com.fit.benefit.models.Exercise;
 import com.fit.benefit.utils.Constants;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -72,6 +73,7 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseRecyc
         //json.parseJSON(category, mRecyclerView, mExerciseList, mRequestQueue, mProgress, mListener);
         parseJSON(category);
     }
+
 
     // analyze the JSON response and fetches the data for the workouts
     private void parseJSON(int category) {

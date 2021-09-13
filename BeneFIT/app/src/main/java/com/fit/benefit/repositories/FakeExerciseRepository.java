@@ -14,7 +14,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 
-public class FakeExerciseRepository implements IExerciseRepository{
+public abstract class FakeExerciseRepository implements IExerciseRepository{
 
     private static final String TAG = "FakeExerciseRepository";
     private final ResponseCallback responseCallback;

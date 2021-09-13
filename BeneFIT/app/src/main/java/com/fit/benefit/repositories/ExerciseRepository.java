@@ -3,16 +3,14 @@ package com.fit.benefit.repositories;
 import android.app.Application;
 import android.util.Log;
 
+import com.fit.benefit.data.ExerciseListFragmentRecyclerView;
 import com.fit.benefit.database.ExerciseDao;
 import com.fit.benefit.database.ExerciseRoomDatabase;
 import com.fit.benefit.models.Exercise;
 import com.fit.benefit.models.Response;
 import com.fit.benefit.services.ExercisesService;
 import com.fit.benefit.utils.Constants;
-import com.fit.benefit.utils.ResponseCallback;
 import com.fit.benefit.utils.ServiceLocator;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -21,69 +19,100 @@ import retrofit2.Callback;
 
 import static android.content.ContentValues.TAG;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.MutableLiveData;
+
 public class ExerciseRepository implements IExerciseRepository {
 
-    private final ExercisesService exercisesService;
-    private final ResponseCallback responseCallback;
-    private final ExerciseDao exerciseDao;
+    private final ExercisesService exerciseService;
+    private final ExerciseDao mExerciseDao;
 
-    public ExerciseRepository(ResponseCallback responseCallback, Application application) {
-        this.exercisesService = ServiceLocator.getInstance().getExercisesServiceWithRetrofit();
-        this.responseCallback = responseCallback;
+    private final Application application;
+    private final MutableLiveData<Response> mResponseLiveData;
+
+    public ExerciseRepository(ExerciseListFragmentRecyclerView exerciseListFragmentRecyclerView, Application application) {
+        this.application = application;
+        this.exerciseService = ServiceLocator.getInstance().getExercisesServiceWithRetrofit();
         ExerciseRoomDatabase db = ServiceLocator.getInstance().getExerciseDao(application);
-        this.exerciseDao = db.exerciseDao();
+        this.mExerciseDao = db.exerciseDao();
+        this.mResponseLiveData = new MutableLiveData<>();
     }
 
     @Override
-    public void fetchExercises(long lastUpdate) {
-
+    public MutableLiveData<Response> fetchExercise(long lastUpdate) {
         long currentTime = System.currentTimeMillis();
 
+        // It gets news from the Web Service if the last download of news has been performed more than one hour ago
         if (currentTime - lastUpdate > Constants.FRESH_TIMEOUT) {
-
-            Call<Response> call = exercisesService.getExercise(2, 300, 0, Constants.EXERCISES_API_KEY);
+            Call<Response> call = exerciseService(2, 300, 0, Constants.EXERCISES_API_KEY);
 
             call.enqueue(new Callback<Response>() {
                 @Override
-                public void onResponse(@NotNull Call<Response> call, @NotNull retrofit2.Response<Response> response) {
+                public void onResponse(@NonNull Call<Response> call, @NonNull retrofit2.Response<Response> response) {
                     if (response.body() != null && response.isSuccessful()) {
-                        long lastUpdate = System.currentTimeMillis();
+                        long setLastUpdate = System.currentTimeMillis();
                         List<Exercise> exerciseList = response.body().getExerciseList();
                         saveDataInDatabase(exerciseList);
-                        responseCallback.onResponse(exerciseList, lastUpdate);
+                        mResponseLiveData.postValue(response.body());
                     }
                 }
 
                 @Override
-                public void onFailure(@NotNull Call<Response> call, @NotNull Throwable t) {
-                    responseCallback.onFailure(t.getMessage());
+                public void onFailure(@NonNull Call<Response> call, @NonNull Throwable t) {
+                    mResponseLiveData.postValue(new Response(t.getMessage(), -1, null, false));
                 }
             });
-        }
-        else {
+            // It gets news from the local database
+        } else {
             Log.d(TAG, "Data read from the local database");
-            readDataFromDatabase(lastUpdate);
+            readDataFromDatabase();
         }
+
+        return mResponseLiveData;
     }
 
-    private void readDataFromDatabase(long lastUpdate) {
+
+    @Override
+    public void fetchExercises(long lastUpdate) {
+
+    }
+
+
+    private void readDataFromDatabase() {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                responseCallback.onResponse(exerciseDao.getAllExercises(), lastUpdate);
+                List<Exercise> exerciseList = mExerciseDao.getAllExercises();
+                mResponseLiveData.postValue(new Response(null, exerciseList.size(), exerciseList, false));
             }
         };
         new Thread(runnable).start();
     }
 
-    public void saveDataInDatabase (List<Exercise> exerciseList){
+    private void saveDataInDatabase(List<Exercise> exerciseList) {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                exerciseDao.deleteAll();
-                exerciseDao.insertExercise(exerciseList);
+                mExerciseDao.deleteAll();
+                mExerciseDao.insertExercise(exerciseList);
             }
         };
         new Thread(runnable).start();
     }
+
+    private void addExercise(List<Exercise> exerciseList) {
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                mExerciseDao.insertExercise(exerciseList);
+            }
+        };
+        new Thread(runnable).start();
+    }
+
+
+    private Call<Response> exerciseService(int i, int i1, int i2, String exercisesApiKey) {
+        return null;
+    }
+
 }
