@@ -139,4 +139,10 @@ public class RegisterActivity extends AppCompatActivity {
             favorites[i] = new ArrayList<Integer>();
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent (this, MainActivity.class);
+        startActivity(intent);
+    }
 }

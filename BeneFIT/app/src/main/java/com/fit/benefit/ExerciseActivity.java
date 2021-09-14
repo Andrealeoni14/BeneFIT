@@ -19,8 +19,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.fit.benefit.data.ExerciseRecyclerViewAdapter;
+import com.fit.benefit.database.ExerciseDao;
 import com.fit.benefit.database.ExerciseRoomDatabase;
 import com.fit.benefit.models.Exercise;
+import com.fit.benefit.repositories.ExerciseRepository;
+import com.fit.benefit.repositories.IExerciseRepository;
 import com.fit.benefit.utils.Constants;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
@@ -29,6 +32,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.jsoup.*;
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.fit.benefit.LoginActivity.NCat;
 import static com.fit.benefit.LoginActivity.fCat;
@@ -41,9 +45,10 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseRecyc
     public static final String EXTRA_IMAGE = "image";
     public static final String EXTRA_CAT = "category";
     public static final String EXTRA_INDEX = "index";
+    public static final String EXTRA_RETR = "back";
 
     private RecyclerView mRecyclerView;
-    private final ArrayList<Exercise> mExerciseList = new ArrayList<>();
+    private List<Exercise> mExerciseList = new ArrayList<>();
     private ExerciseRecyclerViewAdapter.OnExerciseClickListener listener;
     private ExerciseRecyclerViewAdapter mAdapter;
     private RequestQueue mRequestQueue;
@@ -51,7 +56,8 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseRecyc
     private int imgCont =0;
     private int i = 0;
     private int j = 0;
-    //private JsonParsing json;
+    private int category;
+    boolean first = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,11 +75,29 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseRecyc
 
         mRequestQueue = Volley.newRequestQueue(this);
         Intent intent = getIntent();
-        int category = intent.getIntExtra("category", 0);
-        //json.parseJSON(category, mRecyclerView, mExerciseList, mRequestQueue, mProgress, mListener);
-        parseJSON(category);
-    }
+        category = intent.getIntExtra("category", 0);
 
+        ExerciseRoomDatabase db = ExerciseRoomDatabase.getDatabase(this.getApplicationContext());
+        ExerciseDao dao = db.exerciseDao();
+        ExerciseRepository repo = new ExerciseRepository(dao, this.getApplication());
+        parseJSON(category);
+        repo.saveDataInDatabase(mExerciseList);
+
+        //questo if else non funziona perchè quando torna qui first è sempre true
+        /*if(first) {
+            qui c'erano parse e repo.save
+            first = false;
+        }
+        else {
+            //repo.readDataFromDatabase();
+            mExerciseList = db.exerciseDao().findByCategory(category);
+            mAdapter = new ExerciseRecyclerViewAdapter(
+                    ExerciseActivity.this, mExerciseList, listener);
+            mRecyclerView.setAdapter(mAdapter);
+            mAdapter.setOnExerciseClickListener(ExerciseActivity.this);
+        }*/
+
+    }
 
     // analyze the JSON response and fetches the data for the workouts
     private void parseJSON(int category) {
@@ -208,11 +232,18 @@ public class ExerciseActivity extends AppCompatActivity implements ExerciseRecyc
         detail.putExtra(EXTRA_IMAGE, exercise.getImg());
         detail.putExtra(EXTRA_CAT, exercise.getCategory());
         detail.putExtra(EXTRA_INDEX, exercise.getIndex());
+        detail.putExtra(EXTRA_RETR, category);
         startActivity(detail);
     }
 
     public void logoutClick(android.view.View view) {
         LogoutActivity logout = new LogoutActivity();
         logout.logoutFunction(ExerciseActivity.this);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent (this, CategoryActivity.class);
+        startActivity(intent);
     }
 }

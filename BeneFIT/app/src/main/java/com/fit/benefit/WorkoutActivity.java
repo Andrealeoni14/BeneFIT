@@ -20,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Button;
@@ -38,14 +39,13 @@ import static com.fit.benefit.ExerciseActivity.EXTRA_DESC;
 import static com.fit.benefit.ExerciseActivity.EXTRA_IMAGE;
 import static com.fit.benefit.ExerciseActivity.EXTRA_INDEX;
 import static com.fit.benefit.ExerciseActivity.EXTRA_NAME;
+import static com.fit.benefit.ExerciseActivity.EXTRA_RETR;
 import static com.fit.benefit.LoginActivity.fCat;
 import static com.fit.benefit.LoginActivity.favorites;
 import static com.fit.benefit.LoginActivity.findCatIndex;
 
 public class WorkoutActivity extends AppCompatActivity {
 
-    //private TextView mTextViewResult;
-    //private RequestQueue mQueue;
     private int category;
     private int index;
 
@@ -53,6 +53,7 @@ public class WorkoutActivity extends AppCompatActivity {
     private boolean favorite = false;
     private int catIndex;
     private Button favoriteButton;
+    private Bundle extras;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,16 +62,15 @@ public class WorkoutActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //mTextViewResult = findViewById(R.id.text_view_result);
-        //mQueue = Volley.newRequestQueue(this);
         Intent intent = getIntent();
-        Bundle extras = intent.getExtras();
-        //int workout = intent.getIntExtra("workout", 0);
+        extras = intent.getExtras();
+
         String imageUrl = extras.getString(EXTRA_IMAGE);
         String name = extras.getString(EXTRA_NAME);
         String description = extras.getString(EXTRA_DESC);
         category = extras.getInt(EXTRA_CAT);
         index = extras.getInt(EXTRA_INDEX);
+
 
         ImageView im = findViewById(R.id.exe_image);
         TextView textName = findViewById(R.id.exe_name);
@@ -118,7 +118,7 @@ public class WorkoutActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
-                                favorites = true;
+                                favorite = true;
                                 changeSize(collRef, task, true);
                                 favoriteButton.setText(R.string.remSave);
                             }
@@ -132,7 +132,7 @@ public class WorkoutActivity extends AppCompatActivity {
             currentCat.update(update).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull @NotNull Task<Void> task) {
-                    favorites = false;
+                    favorite = false;
                     favoriteButton.setText(R.string.save);
                 }
             });
@@ -171,5 +171,15 @@ public class WorkoutActivity extends AppCompatActivity {
     public void logoutClick(android.view.View view) {
         LogoutActivity logout = new LogoutActivity();
         logout.logoutFunction(WorkoutActivity.this);
+    }
+
+    @Override
+    public void onBackPressed() {
+        int iCat = extras.getInt(EXTRA_RETR);
+
+        Intent intent = new Intent (this, ExerciseActivity.class);
+        intent.putExtra("category", iCat);
+        startActivity(intent);
+
     }
 }

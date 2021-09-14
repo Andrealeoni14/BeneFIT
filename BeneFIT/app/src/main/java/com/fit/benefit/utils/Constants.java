@@ -11,7 +11,7 @@ public class Constants {
     public static final int FRESH_TIMEOUT = 3600*1000*5; // 5 hour in milliseconds
     public static final String LAST_UPDATE = "lastUpdate";
 
-    public static final String DATABASE_NAME = "exercise_database";
+    public static final String DATABASE_NAME = "exercise_database.db";
     public static final int DATABASE_VERSION = 1;
 
     public static final String FIREBASE_DB = "";

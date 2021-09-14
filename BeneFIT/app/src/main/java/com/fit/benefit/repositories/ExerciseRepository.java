@@ -30,6 +30,14 @@ public class ExerciseRepository implements IExerciseRepository {
     private final Application application;
     private final MutableLiveData<Response> mResponseLiveData;
 
+    public ExerciseRepository(ExerciseDao dao, Application application) {
+        this.application = application;
+        this.exerciseService = ServiceLocator.getInstance().getExercisesServiceWithRetrofit();
+        ExerciseRoomDatabase db = ServiceLocator.getInstance().getExerciseDao(application);
+        dao = db.exerciseDao();
+        this.mExerciseDao = dao;
+        this.mResponseLiveData = new MutableLiveData<>();
+    }
     public ExerciseRepository(ExerciseListFragmentRecyclerView exerciseListFragmentRecyclerView, Application application) {
         this.application = application;
         this.exerciseService = ServiceLocator.getInstance().getExercisesServiceWithRetrofit();
@@ -74,11 +82,10 @@ public class ExerciseRepository implements IExerciseRepository {
 
     @Override
     public void fetchExercises(long lastUpdate) {
-
     }
 
 
-    private void readDataFromDatabase() {
+    public void readDataFromDatabase() {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
@@ -89,7 +96,7 @@ public class ExerciseRepository implements IExerciseRepository {
         new Thread(runnable).start();
     }
 
-    private void saveDataInDatabase(List<Exercise> exerciseList) {
+    public void saveDataInDatabase(List<Exercise> exerciseList) {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {

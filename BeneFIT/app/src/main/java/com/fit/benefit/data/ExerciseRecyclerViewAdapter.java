@@ -21,7 +21,7 @@ import java.util.List;
 public class ExerciseRecyclerViewAdapter extends RecyclerView.Adapter<ExerciseRecyclerViewAdapter.ExercisesViewHolder> {
 
     private Context mContext;
-    private ArrayList<Exercise> exerciseList;
+    private List<Exercise> exerciseList;
     private OnExerciseClickListener listener;
 
     public interface OnExerciseClickListener {
@@ -30,7 +30,7 @@ public class ExerciseRecyclerViewAdapter extends RecyclerView.Adapter<ExerciseRe
 
     public void setOnExerciseClickListener(OnExerciseClickListener listener) { this.listener = listener; }
 
-    public ExerciseRecyclerViewAdapter(Context context, ArrayList<Exercise> exerciseList, OnExerciseClickListener listener) {
+    public ExerciseRecyclerViewAdapter(Context context, List<Exercise> exerciseList, OnExerciseClickListener listener) {
         mContext = context;
         this.exerciseList = exerciseList;
         this.listener = listener;
@@ -54,9 +54,6 @@ public class ExerciseRecyclerViewAdapter extends RecyclerView.Adapter<ExerciseRe
         String imageUrl = currentItem.getImg();
         String description = currentItem.getDescription();
         holder.nameTextView.setText(name);
-        //Picasso.with(mContext).load(imageUrl).fit().placeholder(R.drawable.front).into(holder.mImage);
-
-        //Picasso.with(mContext).load(imageUrl).fit().centerInside().into(holder.mImage);
     }
 
     @Override
@@ -67,7 +64,7 @@ public class ExerciseRecyclerViewAdapter extends RecyclerView.Adapter<ExerciseRe
         return 0;
     }
 
-    public void addData(ArrayList<Exercise> exerciseList) {
+    public void addData(List<Exercise> exerciseList) {
         this.exerciseList = exerciseList;
     }
 
@@ -89,9 +86,6 @@ public class ExerciseRecyclerViewAdapter extends RecyclerView.Adapter<ExerciseRe
                             listener.onExerciseClick(exerciseList.get(position));
                         }
                     }
-                    /*int position = getAdapterPosition();
-                    Exercise exercise = exerciseList.get(position);
-                    Toast.makeText(mContext, (CharSequence) exercise, Toast.LENGTH_SHORT).show();*/
                 }
             });
         }

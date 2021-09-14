@@ -5,6 +5,7 @@ import android.os.Parcelable;
 import android.provider.ContactsContract;
 import android.widget.ImageView;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -12,16 +13,18 @@ import androidx.room.PrimaryKey;
 
 public class Exercise implements Parcelable {
 
-    //@PrimaryKey(autoGenerate = true)
-    //private int idRoom;
-
     @PrimaryKey
     private int id;
 
+    @ColumnInfo(name = "name")
     private String name;
+    @ColumnInfo(name = "description")
     private String description;
+    @ColumnInfo(name = "img")
     private String img;
+    @ColumnInfo(name = "category")
     private int category;
+    @ColumnInfo(name = "index")
     private int index;
 
     public Exercise(int id, String name, String description, String img, int category, int index){
@@ -34,8 +37,6 @@ public class Exercise implements Parcelable {
     }
 
     //getters e setters
-    //public int getIdRoom() { return idRoom; }
-    //public void setIdRoom(int idRoom) { this.idRoom = idRoom; }
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
     public String getName() { return name; }

@@ -21,6 +21,9 @@ public interface ExerciseDao {
     @Query("DELETE FROM exercises")
     void deleteAll();
 
+    @Query("SELECT * FROM exercises WHERE category = :category")
+    List<Exercise> findByCategory(int category);
+
     @Delete
     void deleteAllWithoutQuery(Exercise... exercises);
 }
